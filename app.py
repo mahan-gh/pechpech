@@ -15,10 +15,8 @@ def main():
     uploaded_file = st.file_uploader("Choose an audio file", type=["mp3"])
 
     if uploaded_file is not None:
-        # Prepare data for API request
-        data = {"audio_file": uploaded_file}
+        data = {"file": uploaded_file}
 
-        # Send POST request to FastAPI endpoint
         response = requests.post("http://0.0.0.0:8000/process_audio", files=data)
 
         if response.status_code == 200:
