@@ -12,14 +12,14 @@ def main():
     )
 
     # Upload file widget
-    uploaded_file = st.file_uploader("Choose an audio file", type="audio/*")
+    uploaded_file = st.file_uploader("Choose an audio file", type=["mp3"])
 
     if uploaded_file is not None:
         # Prepare data for API request
         data = {"audio_file": uploaded_file}
 
         # Send POST request to FastAPI endpoint
-        response = requests.post("http://localhost:8000/process_audio", files=data)
+        response = requests.post("http://0.0.0.0:8000/process_audio", files=data)
 
         if response.status_code == 200:
             # Display processing result
@@ -27,8 +27,8 @@ def main():
             st.success(f"Processing result: {processed_data}")
         else:
             # Handle errors
-            error_message = response.json().get("error", "Unknown error")
-            st.error(f"Error: {error_message}")
+            # error_message = response.json().get("error", "Unknown error")
+            st.error(f"Error: {response = }")
 
 if __name__ == "__main__":
     main()

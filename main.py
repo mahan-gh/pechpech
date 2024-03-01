@@ -1,5 +1,9 @@
 from fastapi import FastAPI, UploadFile, File
 from pydantic import BaseModel
+import whisper
+
+model = whisper.load_model("base")
+
 
 app = FastAPI()
 
@@ -14,9 +18,9 @@ async def process_audio(data: AudioData):
     if data.audio_file:
         audio_content = await data.audio_file.read()
         # Simulate processing the audio content (replace with your actual logic)
-        processed_data = f"Audio data processed: {len(audio_content)} bytes"
+        result = model.transcribe(audio_content)
         print("processed")
-        return {"processed_data": processed_data}
+        return {"processed_data": result}
     else:
         return {"error": "No audio file uploaded"}
 
